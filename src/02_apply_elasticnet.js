@@ -5,8 +5,8 @@
  * 
  * Description:
  * This script generates a forest canopy height model for Maine using Google's
- * Annual Embedding Features (AEF) from satellite imagery. It applies a linear
- * regression model trained on 64 embedding features (A00-A63) to predict 
+ * Annual Embedding Features (AEF) from satellite imagery. It applies an  ElasticNet
+ * linear regression model trained on 64 embedding features to predict 
  * forest height in meters.
  * 
  * Author: John B. Kilbride
