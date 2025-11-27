@@ -19,7 +19,7 @@ function main () {
   
   // Define where you want to save your raster layer
   var output_asset_path = "users/JohnBKilbride/Google_Blog_Post/maine_height_m";
-
+  
   // Pull Maine boundary from TIGER dataset
   var maine_state = ee.FeatureCollection("TIGER/2018/States")
     .filter(ee.Filter.eq("NAME", "Maine"))
@@ -74,10 +74,78 @@ function main () {
   });
   
   Map.addLayer(predicted_height, {min: 2, max: 25, palette: ['black', 'green', 'yellow', 'red']}, 'Predicted height (m)');
-
+  Map.centerObject(maine_state, 7);
+  
+  // Add legend
+  addLegend();
+  
   return null;
-
 }
 
+function addLegend() {
+  
+  // Create legend panel
+  var legend = ui.Panel({
+    style: {
+      position: 'bottom-left',
+      padding: '8px 15px'
+    }
+  });
+  
+  // Add legend title
+  var legendTitle = ui.Label({
+    value: 'Forest Height (m)',
+    style: {
+      fontWeight: 'bold',
+      fontSize: '16px',
+      margin: '0 0 4px 0',
+      padding: '0'
+    }
+  });
+  legend.add(legendTitle);
+  
+  // Define color palette and corresponding values
+  var palette = ['black', 'green', 'yellow', 'red'];
+  var min = 2;
+  var max = 25;
+  var steps = 4;
+  
+  // Create gradient bar
+  var makeColorBar = function(palette) {
+    return ui.Thumbnail({
+      image: ee.Image.pixelLonLat().select(0),
+      params: {
+        bbox: [0, 0, 1, 0.1],
+        dimensions: '200x20',
+        format: 'png',
+        min: 0,
+        max: 1,
+        palette: palette,
+      },
+      style: {stretch: 'horizontal', margin: '0px 8px', maxHeight: '24px'},
+    });
+  };
+  
+  // Create labels for min and max
+  var makeLabels = function(min, max) {
+    var labelPanel = ui.Panel({
+      widgets: [
+        ui.Label(min, {margin: '4px 8px'}),
+        ui.Label((max + min) / 2, {margin: '4px 8px', textAlign: 'center', stretch: 'horizontal'}),
+        ui.Label(max, {margin: '4px 8px'})
+      ],
+      layout: ui.Panel.Layout.flow('horizontal')
+    });
+    return labelPanel;
+  };
+  
+  // Add color bar and labels to legend
+  legend.add(makeColorBar(palette));
+  legend.add(makeLabels(min, max));
+  
+  // Add legend to map
+  Map.add(legend);
+  
+}
 
 main();
