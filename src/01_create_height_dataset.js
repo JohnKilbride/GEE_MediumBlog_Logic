@@ -7,12 +7,11 @@
  * Description: 
  *   This script samples LiDAR-derived forest height measurements and 
  *   extracts the spatially and temporally coincident embedding values from Google's 
- *   AlphaEarth Foundations geospatial embedding dataset.
+ *   AlphaEarth Foundations (AEF) geospatial embedding dataset.
  * 
  * Output:
- * - CSV file exported to Google Drive: modeling_dataset
- * - Feature collection with forest height and embedding values
- * 
+ * - CSV file exported to Google Drive w/ the forest heights (meters)
+ *   and the AEF embedding field values. 
  * ============================================================================
  */
  
