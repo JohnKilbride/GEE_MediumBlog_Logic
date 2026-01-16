@@ -24,20 +24,13 @@ function main () {
   var maine_state = ee.FeatureCollection("TIGER/2018/States")
     .filter(ee.Filter.eq("NAME", "Maine"))
     .geometry();
-    
-  // Create the Maine forest mask using annual NLCD data
-  var forest_mask = ee.Image(ee.ImageCollection("projects/sat-io/open-datasets/USGS/ANNUAL_NLCD/LANDCOVER")
-    .filterDate("2024-01-01", "2024-12-31")
-    .first())
-    .remap([41, 42, 43], [1, 1, 1],  0);
-  
+
   // Load AEF embeddings and rename bands to match predictors
   var aef_maine_2024 = ee.ImageCollection("GOOGLE/SATELLITE_EMBEDDING/V1/ANNUAL")
     .filterBounds(maine_state)
     .filterDate("2024-01-01", "2024-12-31")
     .mosaic()
-    .updateMask(ee.Image(0).paint(maine_state, 1))
-    .updateMask(forest_mask);
+    .updateMask(ee.Image(0).paint(maine_state, 1));
     
   // Define the intercept
   var intercept = 11.53513;
@@ -73,7 +66,7 @@ function main () {
     maxPixels: 1e13
   });
   
-  Map.addLayer(predicted_height, {min: 2, max: 25, palette: ['black', 'green', 'yellow', 'red']}, 'Predicted height (m)');
+  Map.addLayer(predicted_height, {min: 0, max: 30, palette: ['#ffffe5','#f7fcb9','#d9f0a3','#addd8e','#78c679','#41ab5d','#238443','#006837','#004529']}, 'Predicted height (m)');
   Map.centerObject(maine_state, 7);
   
   // Add legend
@@ -83,11 +76,10 @@ function main () {
 }
 
 function addLegend() {
-  
   // Create legend panel
   var legend = ui.Panel({
     style: {
-      position: 'bottom-left',
+      position: 'bottom-center',
       padding: '8px 15px'
     }
   });
@@ -105,8 +97,8 @@ function addLegend() {
   legend.add(legendTitle);
   
   // Define color palette and corresponding values
-  var palette = ['black', 'green', 'yellow', 'red'];
-  var min = 2;
+  var palette = ['#ffffe5','#f7fcb9','#d9f0a3','#addd8e','#78c679','#41ab5d','#238443','#006837','#004529'];
+  var min = 0;
   var max = 25;
   var steps = 4;
   
