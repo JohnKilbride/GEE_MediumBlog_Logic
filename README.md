@@ -11,7 +11,7 @@ The demonstration has three steps:
 1. Constructing a canopy height modeling dataset in Google Earth Engine. Here, we sample the canopy height and the spatially/temporally coincident embedding fields values.
 2. Fitting an elastic net regression model to estimate canopy height. We use the Optuna package to efficiently search the elastic net hyperparameters. 
 3. Applying the elastic net model in Google Earth Engine to map canopy height.
-4. 
+ 
 Steps 1 and 3 are performed using the Google Earth Engine JavaScript playground. Step 2 is performed locally using several standard Python data science libraries (e.g., SciKit-Learn). Below, we provide instructions for configuring a conda environment with the necessary packages.
 
 ## Configure your conda environment
