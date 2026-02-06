@@ -1,4 +1,4 @@
-<img src="figures/Cover-Image.png" alt="Header Image" width="50%">
+<img src="figures/Cover-Image.png" alt="Header Image" width="75%">
 
 ## Overview
 
