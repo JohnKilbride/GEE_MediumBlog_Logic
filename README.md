@@ -17,17 +17,18 @@ The demonstration has three steps:
  
 Steps 1 and 3 are performed using the Google Earth Engine JavaScript playground. Step 2 is performed locally using several standard Python data science libraries (e.g., SciKit-Learn). Below, we provide instructions for configuring a conda environment with the necessary packages.
 
-## Configure your conda environment
+## Configuring the conda environment
 
 Install the conda environment:
 ```bash
 conda env create -f environment.yml
 ```
-### Activate Environment
+Activate the conda environment
 ```bash
 conda activate gee_demo
 ```
-### Register Kernel
+
+Register the kernel so it can be selected in the Jupter Notebook
 ```bash
 python -m ipykernel install --user --name=gee_demo --display-name="Python (GEE demo)"
 ```
