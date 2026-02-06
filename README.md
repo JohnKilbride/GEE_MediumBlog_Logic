@@ -1,27 +1,34 @@
+<p align="center">
+  <img src="figures/Cover-Image.png" alt="Header Image" width="75%">
+</p>
 
 ## Overview
 
-This is the logic associated with a Google Earth Engine (GEE) Medium blog post. As part of the blog post we included a forest structure mapping demonstration.  
+This repo contains the logic used in the Google Earth and Google Earth Engine (GEE) Medium blog post: [Improved forest carbon estimation with AlphaEarth Foundations and Airborne LiDAR data](https://medium.com/google-earth/improved-forest-carbon-estimation-with-alphaearth-foundations-and-airborne-lidar-data-af2d93e94c55)
 
-The Jupyter notebook handles the machine learning training workflow. It uses Optuna for hyperparameter optimization to find the best ElasticNet regression parameters through spatial cross-validation. The model learns to predict forest canopy height from the 64 AlphaEarth embedding features. After tuning, it trains a final model on the entire dataset. The script yields the the intercept and 64 coefficients that will be used for prediction in GEE. 
+This repo demonstrates how to use Google Earth Engine and the AlphaEarth Foundations geospatial embedding fields to generate canopy height models. We derive our reference canopy height measurements from aerial LiDAR aggregated from the [USGS 3DEP program](https://www.usgs.gov/3d-elevation-program). Canopy height was modeled using [elastic net regression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.ElasticNet.html).  
 
+## Demonstration overview
 
-The GEE JavaScript code applies these trained coefficients to actually generate the forest height map. Forests are isolated using a forest/non-forest mask dervied from the 2024 NLCD landcover dataset (classes 41, 42, 43). The script then implements the linear model by multiplying each of the 64 embedding bands by its corresponding coefficient, summing the results, and adding the intercept to get predicted height in meters. Finally, it exports the height map as an Earth Engine asset.
+The demonstration has three steps: 
+1. Constructing a canopy height modeling dataset in Google Earth Engine. Here, we sample the canopy height and the spatially/temporally coincident embedding fields values.
+2. Fitting an elastic net regression model to estimate canopy height. We use the Optuna package to efficiently search the elastic net hyperparameters. 
+3. Applying the elastic net model in Google Earth Engine to map canopy height.
+ 
+Steps 1 and 3 are performed using the Google Earth Engine JavaScript playground. Step 2 is performed locally using several standard Python data science libraries (e.g., SciKit-Learn). Below, we provide instructions for configuring a conda environment with the necessary packages.
 
+## Configuring the conda environment
 
-## Create Environment
-
-Install the conda enviornment
+Install the conda environment:
 ```bash
 conda env create -f environment.yml
 ```
-
-Activate the newly created Conda nvironment
+Activate the conda environment
 ```bash
 conda activate gee_demo
 ```
 
-Register the Conda kernel
+Register the kernel so it can be selected in the Jupter Notebook
 ```bash
 python -m ipykernel install --user --name=gee_demo --display-name="Python (GEE demo)"
 ```
