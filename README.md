@@ -1,5 +1,4 @@
-<!-- Replace with your header image URL -->
-![Header Image](figures/Cover-Image.png)
+<img src="figures/Cover-Image.png" alt="Header Image" width="50%">
 
 ## Overview
 
