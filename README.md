@@ -8,6 +8,8 @@ This repo contains the logic used in the Google Earth and Google Earth Engine (G
 
 This repo demonstrates how to use Google Earth Engine and the AlphaEarth Foundations geospatial embedding fields to generate canopy height models. We derive our reference canopy height measurements from aerial LiDAR aggregated from the [USGS 3DEP program](https://www.usgs.gov/3d-elevation-program). Canopy height was modeled using [elastic net regression](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.ElasticNet.html).  
 
+## Demonstration overview
+
 The demonstration has three steps: 
 1. Constructing a canopy height modeling dataset in Google Earth Engine. Here, we sample the canopy height and the spatially/temporally coincident embedding fields values.
 2. Fitting an elastic net regression model to estimate canopy height. We use the Optuna package to efficiently search the elastic net hyperparameters. 
