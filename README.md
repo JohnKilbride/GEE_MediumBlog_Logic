@@ -1,27 +1,42 @@
+<!-- Replace with your header image URL -->
+![Header Image](figures/Cover-Image.png)
+
+# Forest Canopy Height Mapping with Google Earth Engine
 
 ## Overview
 
-This is the logic associated with a Google Earth Engine (GEE) Medium blog post. As part of the blog post we included a forest structure mapping demonstration.  
+This repository contains the code for a Google Earth Engine (GEE) Medium blog post demonstrating forest structure mapping using machine learning.
 
-The Jupyter notebook handles the machine learning training workflow. It uses Optuna for hyperparameter optimization to find the best ElasticNet regression parameters through spatial cross-validation. The model learns to predict forest canopy height from the 64 AlphaEarth embedding features. After tuning, it trains a final model on the entire dataset. The script yields the the intercept and 64 coefficients that will be used for prediction in GEE. 
+### Components
 
+**Jupyter Notebook**
+- Implements the machine learning training workflow
+- Uses Optuna for hyperparameter optimization of ElasticNet regression
+- Employs spatial cross-validation to find optimal parameters
+- Predicts forest canopy height from 64 AlphaEarth embedding features
+- Outputs intercept and 64 coefficients for use in GEE
 
-The GEE JavaScript code applies these trained coefficients to actually generate the forest height map. Forests are isolated using a forest/non-forest mask dervied from the 2024 NLCD landcover dataset (classes 41, 42, 43). The script then implements the linear model by multiplying each of the 64 embedding bands by its corresponding coefficient, summing the results, and adding the intercept to get predicted height in meters. Finally, it exports the height map as an Earth Engine asset.
+**GEE JavaScript Code**
+- Applies trained model coefficients to generate forest height maps
+- Isolates forests using a forest/non-forest mask derived from 2024 NLCD landcover (classes 41, 42, 43)
+- Implements linear prediction: multiplies each of the 64 embedding bands by its coefficient, sums results, and adds intercept
+- Exports final height map (in meters) as an Earth Engine asset
 
+## Installation
 
-## Create Environment
+### Create Environment
 
-Install the conda enviornment
+Install the conda environment:
 ```bash
 conda env create -f environment.yml
 ```
 
-Activate the newly created Conda nvironment
+### Activate Environment
 ```bash
 conda activate gee_demo
 ```
 
-Register the Conda kernel
+### Register Kernel
 ```bash
 python -m ipykernel install --user --name=gee_demo --display-name="Python (GEE demo)"
 ```
