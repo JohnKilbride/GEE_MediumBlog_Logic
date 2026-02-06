@@ -1,4 +1,6 @@
-<img src="figures/Cover-Image.png" alt="Header Image" width="75%">
+<p align="center">
+  <img src="figures/Cover-Image.png" alt="Header Image" width="500">
+</p>
 
 ## Overview
 
